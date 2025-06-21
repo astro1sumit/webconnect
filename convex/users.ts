@@ -12,8 +12,8 @@ export const syncUser = mutation({
     handler: async (ctx, args) => {
         const existingUser = await ctx.db
         .query("users")
-        .filter(q =>q.eq(q.field("clerkId"), args.clerkId))
-        .first()
+        .filter((q) =>q.eq(q.field("clerkId"), args.clerkId))
+        .first();
 
         if (existingUser) return;
         
@@ -23,7 +23,6 @@ export const syncUser = mutation({
         })
     }
 });
-export default syncUser;
 
 export const getUser = query({
     handler: async (ctx)=> {

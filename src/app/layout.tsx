@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import ConvexClerkProvider from "@/components/ui/providers/ConvexClerkProvider";
+import Navbar from "@/components/ui/Navbar";
+import { ThemeProvider } from "@/components/ui/providers/ThemeProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,13 +28,23 @@ export default function RootLayout({
 }>) {
   return (
     <ConvexClerkProvider>
-      <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {children}
-      </body>
-    </html>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="min-h-screen">
+              <Navbar />
+              <main className="px-4 sm:px-6 lg:px-8">{children}</main>
+            </div>
+          </ThemeProvider>
+        </body>
+      </html>
     </ConvexClerkProvider>
-    
+
   );
 }

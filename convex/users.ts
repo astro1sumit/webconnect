@@ -27,7 +27,7 @@ export default syncUser;
 
 export const getUser = query({
     handler: async (ctx)=> {
-        const identify = ctx.auth.getUserIdentity();
+        const identify = await ctx.auth.getUserIdentity();
         if(!identify) {
             throw new Error("User not authenticated");
         }
@@ -37,14 +37,14 @@ export const getUser = query({
     },
 });
 
-export const getUserByClerkId=query({
-    args:{clerckId:v.string()},
-    handler: async (ctx, args) => {
-        const user=await ctx.db
-          .query("users")
-          .withIndex("by_clerk_id"), (q)=>q.eq("clerkId", args.clerckId))
-          .first();
+export const getUserByClerkId = query({
+  args: { clerkId: v.string() },
+  handler: async (ctx, args) => {
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_clerk_Id", (q) => q.eq("clerkId", args.clerkId))
+      .first();
 
-        return user;
-    }
+    return user;
+  },
 });
